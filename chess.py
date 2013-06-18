@@ -492,9 +492,9 @@ class ChessBoard:
         if abs(new_y - old_y) == 2:
             left = new_x - 1, new_y
             right = new_x + 1, new_y
-            if not self.empty(left) and not same_color(old_pos, left):
+            if not self.empty(left) and not self.same_color(old_pos, left):
                 self.en_passant = new_pos
-            elif not self.empty(right) and not same_color(old_pos, right):
+            elif not self.empty(right) and not self.same_color(old_pos, right):
                 self.en_passant = new_pos
         elif abs(new_x - old_x) == abs(new_y - old_y):
             if self.empty(new_pos):
