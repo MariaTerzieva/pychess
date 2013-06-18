@@ -41,7 +41,7 @@ class ChessBoard:
     EMPTY = None
     WHITE = 'white'
     BLACK = 'black'
-    GAME_IN_PROGRESS = 'Game in progess.'
+    GAME_IN_PROGRESS = 'Game in progress.'
     BLACK_WIN = 'Black win!'
     WHITE_WIN = 'White win!'
     STALEMATE = 'Stalemate!'
@@ -49,7 +49,7 @@ class ChessBoard:
     turn = WHITE
     white_king = (4, 7)
     black_king = (4, 0)
-    game_status = 'Game in progress'
+    game_status = GAME_IN_PROGRESS
 
     def __init__(self):
         self.board = [[Rook('black'), Knight('black'), Bishop('black'),
@@ -467,10 +467,10 @@ class ChessBoard:
 
         if new_x == old_x + 2:
             self.board[7][7].moved = True
-            self.move(7, 7, 5, 7)
+            self.move((7, 7), (5, 7))
         elif new_x == old_x - 2:
             self.board[7][0].moved = True
-            self.move(0, 7, 3, 7)
+            self.move((0, 7), (3, 7))
 
         if self.turn == self.WHITE:
             white_king = new_pos
