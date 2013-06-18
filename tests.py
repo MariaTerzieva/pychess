@@ -157,7 +157,7 @@ class ChessBoardTests(unittest.TestCase):
         self.board.move_piece((3, 0), (7, 4))
         result = self.board.any_valid_moves()
         self.assertFalse(result)
- 
+
     def test_en_passant(self):
         self.board.move_piece((2, 6), (2, 4))
         self.board.move_piece((1, 1), (1, 3))
@@ -176,6 +176,86 @@ class ChessBoardTests(unittest.TestCase):
         self.board.move_piece((3, 0), (7, 4))
         result = self.board.check()
         self.assertTrue(result)
+
+    def test_switch_turn(self):
+        white = self.board.turn
+        self.board.switch_turn()
+        black = self.board.turn
+        self.assertNotEqual(white, black)
+
+    def test_valid_player(self):
+        result = self.board.valid_player((4, 0))
+        self.assertFalse(result)
+
+    def test_move(self):
+        self.board.move((4, 6), (4, 4))
+        result = self.board.empty((4, 6))
+        self.assertTrue(result)
+
+    def test_move_queen(self):
+        result = self.board.move_queen((3, 7), (5, 5))
+        self.assertFalse(result)
+
+    def test_move_bishop(self):
+        self.board.board[6][3] = None
+        result = self.board.move_bishop((2, 7), (6, 3))
+        self.assertTrue(result)
+
+    def test_move_rook(self):
+        self.board.board[6][7] = None
+        self.board.move_rook((7, 7), (7, 2))
+        result = self.board.empty((7, 7))
+        self.assertTrue(result)
+
+    def test_move_knight(self):
+        self.board.move_knight((6, 0), (5, 2))
+        result = self.board.empty((6, 0))
+        self.assertTrue(result)
+
+    def test_move_king(self):
+        self.board.board[7][5], self.board.board[7][6] = None, None
+        self.board.move_king((4, 7), (6, 7))
+        result = self.board.empty((4, 7))
+        self.assertTrue(result)
+        result = self.board.empty((7, 7))
+        self.assertTrue(result)
+
+    def test_move_pawn(self):
+        self.board.move_pawn((5, 6), (5, 4))
+        self.board.move_pawn((5, 1), (5, 3))
+        result = self.board.move_pawn((5, 3), (5, 4))
+        self.assertFalse(result)
+
+    def test_move_piece(self):
+        self.board.move_piece((4, 6), (4, 4))
+        self.board.move_piece((4, 1), (4, 3))
+        self.board.move_piece((6, 7), (5, 5))
+        self.board.move_piece((1, 0), (2, 2))
+        self.board.move_piece((1, 7), (2, 5))
+        self.board.move_piece((6, 0), (5, 2))
+        self.board.move_piece((0, 6), (0, 5))
+        self.board.move_piece((3, 1), (3, 3))
+        self.board.move_piece((4, 4), (3, 3))
+        self.board.move_piece((5, 2), (3, 3))
+        self.board.move_piece((5, 7), (4, 6))
+        self.board.move_piece((4, 3), (4, 4))
+        self.board.move_piece((2, 5), (4, 4))
+        self.board.move_piece((3, 3), (5, 4))
+        self.board.move_piece((4, 7), (6, 7))
+        self.board.move_piece((5, 4), (4, 6))
+        self.board.move_piece((3, 7), (4, 6))
+        self.board.move_piece((2, 0), (6, 4))
+        self.board.move_piece((4, 4), (5, 2))
+        result = self.board.check()
+        self.assertTrue(result)
+        result = self.board.any_valid_moves()
+        self.assertFalse(result)
+        status = 'White win!'
+        self.assertEqual(status, self.board.get_game_status())
+
+    def test_get_game_status(self):
+        status = 'Game in progress.'
+        self.assertEqual(status, self.board.get_game_status())
 
 if __name__ == '__main__':
     unittest.main()
