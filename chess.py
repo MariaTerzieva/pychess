@@ -45,11 +45,6 @@ class ChessBoard:
     BLACK_WIN = 'Black win!'
     WHITE_WIN = 'White win!'
     STALEMATE = 'Stalemate!'
-    en_passant = None
-    turn = WHITE
-    white_king = (4, 7)
-    black_king = (4, 0)
-    game_status = GAME_IN_PROGRESS
 
     def __init__(self):
         self.board = [[Rook('black'), Knight('black'), Bishop('black'),
@@ -68,6 +63,11 @@ class ChessBoard:
                       [Rook('white'), Knight('white'), Bishop('white'),
                        Queen('white'), King('white'), Bishop('white'),
                        Knight('white'), Rook('white')]]
+        self.en_passant = None
+        self.turn = self.WHITE
+        self.white_king = (4, 7)
+        self.black_king = (4, 0)
+        self.game_status = self.GAME_IN_PROGRESS
 
     def on_board(self, old_pos, new_pos):
         x_new, y_new = new_pos
