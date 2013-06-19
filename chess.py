@@ -296,7 +296,7 @@ class ChessBoard:
     def castle_check(self, king_pos, rook_pos, color):
         kx, ky = king_pos
         rx, ry = rook_pos
-        
+
         if self.board[ky][kx].moved:
             return False
 
