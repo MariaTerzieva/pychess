@@ -473,9 +473,9 @@ class ChessBoard:
             self.move((0, 7), (3, 7))
 
         if self.turn == self.WHITE:
-            white_king = new_pos
+            self.white_king = new_pos
         else:
-            black_king = new_pos
+            self.black_king = new_pos
 
         self.clear_en_passant()
         self.board[old_y][old_x].moved = True
