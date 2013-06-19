@@ -85,6 +85,10 @@ class ChessBoard:
         return self.board[pos[1]][pos[0]] is self.EMPTY
 
     def obstructions_check(self, dx, dy, steps, pos):
+        """Check for obstructions from `pos`
+        in direction `(dx, dy)` `steps` - 1 positions ahead.
+
+        """
         for i in range(1, steps):
             x = pos[0] + i * dx
             y = pos[1] + i * dy
@@ -101,6 +105,7 @@ class ChessBoard:
         self.en_passant = None
 
     def valid_direction(self, old_pos, new_pos):
+        """Check if pawns move correctly."""
         if self.player_color(old_pos) == self.WHITE:
             return new_pos[1] < old_pos[1]
         else:
@@ -202,6 +207,7 @@ class ChessBoard:
             return False
 
     def king_safe(self, pos, color):
+        """Check if the king of `color` is safe from `pos`."""
         x, y = pos
 
         if color == self.WHITE:
@@ -262,6 +268,10 @@ class ChessBoard:
         return True
 
     def king_guard(self, new_pos, old_pos, piece=None):
+        """Check if the king will be safe if there is a move from
+        `old_pos` to `new_pos`.
+
+        """
         new_x, new_y = new_pos
         old_x, old_y = old_pos
         old = self.board[old_y][old_x]
@@ -294,6 +304,7 @@ class ChessBoard:
         return guarded
 
     def castle_check(self, king_pos, rook_pos, color):
+        """Check if castling for `color` is possible."""
         kx, ky = king_pos
         rx, ry = rook_pos
 
@@ -324,6 +335,7 @@ class ChessBoard:
         return True
 
     def valid_move(self, pos, directions, max_steps=8, piece=None):
+        """Check if there is a valid move from `pos` in `directions`."""
         x, y = pos
 
         for direction in directions:
@@ -351,6 +363,7 @@ class ChessBoard:
         return False
 
     def any_valid_moves(self):
+        """Check for any valid moves for whoever turn it is."""
         color = self.turn
         move = False
 
