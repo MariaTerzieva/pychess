@@ -296,11 +296,14 @@ class ChessBoard:
     def castle_check(self, king_pos, rook_pos, color):
         kx, ky = king_pos
         rx, ry = rook_pos
+        
+        if self.board[ky][kx].moved:
+            return False
 
         if not isinstance(self.board[ry][rx], Rook):
             return False
 
-        if self.board[ky][kx].moved or self.board[ry][rx].moved:
+        if self.board[ry][rx].moved:
             return False
 
         if rx > kx:
@@ -490,12 +493,14 @@ class ChessBoard:
             return False
 
         if abs(new_y - old_y) == 2:
-            left = new_x - 1, new_y
-            right = new_x + 1, new_y
-            if not self.empty(left) and not self.same_color(old_pos, left):
-                self.en_passant = new_pos
-            elif not self.empty(right) and not self.same_color(old_pos, right):
-                self.en_passant = new_pos
+            if new_x > 0:
+                left = new_x - 1, new_y
+                if not (self.empty(left) and self.same_color(old_pos, left)):
+                    self.en_passant = new_pos
+            if new_x < 7:
+                right = new_x + 1, new_y
+                if not (self.empty(right) and self.same_color(old_pos, right)):
+                    self.en_passant = new_pos
         elif abs(new_x - old_x) == abs(new_y - old_y):
             if self.empty(new_pos):
                 self.board[old_y][new_x] = self.EMPTY
