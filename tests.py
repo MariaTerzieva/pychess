@@ -59,7 +59,7 @@ class ChessBoardTests(unittest.TestCase):
         for dx, dy in directions:
             result = self.board.valid_king_move((4, 7), (4 + dx, 7 + dy))
             self.assertTrue(result)
-        result = self.board.valid_king_move((4, 7), (6, 7))
+        result = self.board.valid_king_move((4, 7), (7, 7))
         self.assertFalse(result)
         self.board.board[7][5], self.board.board[7][6] = None, None
         result = self.board.valid_king_move((4, 7), (6, 7))
