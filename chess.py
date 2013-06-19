@@ -120,10 +120,12 @@ class ChessBoard:
 
             if x_new == x_old + 2 and y_new == y_old:
                 rook = 7, 7
+                return self.castle_check(old_pos, rook, color)
             elif x_new == x_old - 2 and y_new == y_old:
                 rook = 0, 7
-
-            return self.castle_check(old_pos, rook, color)
+                return self.castle_check(old_pos, rook, color)
+            else:
+                return False
 
         if abs(y_old - y_new) > 1:
             return False
