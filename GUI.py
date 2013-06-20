@@ -87,6 +87,15 @@ def draw_board():
                 pygame.draw.rect(DISPLAYSURF, DARK_BOX_COLOR, box)
 
 
+def winning_animation(display):
+    font = pygame.font.Font('freesansbold.ttf', 36)
+    text = font.render("Game Over!", True, (255, 255, 255))
+    text_rect = text.get_rect()
+    text_rect.center = (320, 240)
+    if display:
+        DISPLAYSURF.blit(text, text_rect)
+
+
 def main():
     global DISPLAYSURF, IMAGES
     pygame.init()
@@ -109,6 +118,8 @@ def main():
               'b_king': pygame.image.load(os.path.join('images', 'BK.png'))}
 
     first_selection = None
+    display = True
+    animation = False
     game = chess.ChessBoard()
 
     while True:
@@ -136,7 +147,17 @@ def main():
                     first_selection = None
 
         draw_pieces(chess_board)
+
+        if game.white_win() or game.black_win():
+            winning_animation(display)
+            display = not display
+            animation = True
+
         pygame.display.update()
+
+        if animation:
+            pygame.time.wait(500)
+
         FPSCLOCK.tick(FPS)
 
 if __name__ == '__main__':
