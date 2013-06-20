@@ -1,4 +1,7 @@
-import pygame, os, sys, chess
+import pygame
+import os
+import sys
+import chess
 from pygame.locals import QUIT
 
 FPS = 30
@@ -10,16 +13,18 @@ BOARD_HEIGHT = 8
 X_MARGIN = int((WINDOW_WIDTH - (BOARD_WIDTH * BOX_SIZE)) / 2)
 Y_MARGIN = int((WINDOW_HEIGHT - (BOARD_HEIGHT * BOX_SIZE)) / 2)
 LIGHT_BOX_COLOR = (255, 170, 85)
-DARK_BOX_COLOR  = (102, 51, 0)
+DARK_BOX_COLOR = (102, 51, 0)
 BACKGROUND = (50, 0, 0)
 WHITE = 'white'
 BLACK = 'black'
 EMPTY = None
 
+
 def left_top_coords_of_box(box):
     left = box[0] * BOX_SIZE + X_MARGIN
     top = box[1] * BOX_SIZE + Y_MARGIN
     return (left, top)
+
 
 def get_box_at_pixel(pixel):
     for y in range(BOARD_HEIGHT):
@@ -29,6 +34,7 @@ def get_box_at_pixel(pixel):
             if box_rect.collidepoint(pixel[0], pixel[1]):
                 return (x, y)
     return (None, None)
+
 
 def draw_pieces(board):
     for y in range(BOARD_HEIGHT):
@@ -69,6 +75,7 @@ def draw_pieces(board):
                 else:
                     DISPLAYSURF.blit(IMAGES['b_queen'], topleft)
 
+
 def draw_board():
     for y in range(BOARD_HEIGHT):
         for x in range(BOARD_WIDTH):
@@ -78,6 +85,7 @@ def draw_board():
                 pygame.draw.rect(DISPLAYSURF, LIGHT_BOX_COLOR, box)
             else:
                 pygame.draw.rect(DISPLAYSURF, DARK_BOX_COLOR, box)
+
 
 def main():
     global DISPLAYSURF, IMAGES
