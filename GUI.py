@@ -36,89 +36,10 @@ def get_box_at_pixel(pixel):
     return (None, None)
 
 
-def get_target_image(pixel, board):
-    x, y = get_box_at_pixel(pixel)
-    if x is not None and y is not None:
-        if board[y][x] is EMPTY:
-            return None
-        elif isinstance(board[y][x], chess.Pawn):
-            if board[y][x].color == WHITE:
-                return IMAGES['w_pawn']
-            else:
-                return IMAGES['b_pawn']
-        elif isinstance(board[y][x], chess.Rook):
-            if board[y][x].color == WHITE:
-                return IMAGES['w_rook']
-            else:
-                return IMAGES['b_rook']
-        elif isinstance(board[y][x], chess.Bishop):
-            if board[y][x].color == WHITE:
-                return IMAGES['w_bishop']
-            else:
-                return IMAGES['b_bishop']
-        elif isinstance(board[y][x], chess.Knight):
-            if board[y][x].color == WHITE:
-                return IMAGES['w_knight']
-            else:
-                return IMAGES['b_knight']
-        elif isinstance(board[y][x], chess.King):
-            if board[y][x].color == WHITE:
-                return IMAGES['w_king']
-            else:
-                return IMAGES['b_king']
-        elif isinstance(board[y][x], chess.Queen):
-            if board[y][x].color == WHITE:
-                return IMAGES['w_queen']
-            else:
-                return IMAGES['b_queen']
-    else:
-        return None
-
-
 def draw_pieces(board):
     for y in range(BOARD_HEIGHT):
         for x in range(BOARD_WIDTH):
             if board[y][x] is EMPTY:
-                continue
-
-            topleft = left_top_coords_of_box((x, y))
-
-            if isinstance(board[y][x], chess.Pawn):
-                if board[y][x].color == WHITE:
-                    DISPLAYSURF.blit(IMAGES['w_pawn'], topleft)
-                else:
-                    DISPLAYSURF.blit(IMAGES['b_pawn'], topleft)
-            elif isinstance(board[y][x], chess.Rook):
-                if board[y][x].color == WHITE:
-                    DISPLAYSURF.blit(IMAGES['w_rook'], topleft)
-                else:
-                    DISPLAYSURF.blit(IMAGES['b_rook'], topleft)
-            elif isinstance(board[y][x], chess.Bishop):
-                if board[y][x].color == WHITE:
-                    DISPLAYSURF.blit(IMAGES['w_bishop'], topleft)
-                else:
-                    DISPLAYSURF.blit(IMAGES['b_bishop'], topleft)
-            elif isinstance(board[y][x], chess.Knight):
-                if board[y][x].color == WHITE:
-                    DISPLAYSURF.blit(IMAGES['w_knight'], topleft)
-                else:
-                    DISPLAYSURF.blit(IMAGES['b_knight'], topleft)
-            elif isinstance(board[y][x], chess.King):
-                if board[y][x].color == WHITE:
-                    DISPLAYSURF.blit(IMAGES['w_king'], topleft)
-                else:
-                    DISPLAYSURF.blit(IMAGES['b_king'], topleft)
-            elif isinstance(board[y][x], chess.Queen):
-                if board[y][x].color == WHITE:
-                    DISPLAYSURF.blit(IMAGES['w_queen'], topleft)
-                else:
-                    DISPLAYSURF.blit(IMAGES['b_queen'], topleft)
-
-
-def draw_pieces_without_target(board, box):
-    for y in range(BOARD_HEIGHT):
-        for x in range(BOARD_WIDTH):
-            if board[y][x] is EMPTY or (x == box[0] and y == box[1]):
                 continue
 
             topleft = left_top_coords_of_box((x, y))
