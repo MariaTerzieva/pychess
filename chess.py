@@ -585,3 +585,9 @@ class ChessBoard:
 
     def black_win(self):
         return self.get_game_status() == self.BLACK_WIN
+
+    def stalemate(self):
+        return self.get_game_status() == self.STALEMATE
+
+    def get_board(self):
+        return self.board
