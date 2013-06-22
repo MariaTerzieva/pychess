@@ -417,7 +417,6 @@ class ChessBoard:
                                         move = True
                                         break
                 if move:
-                    print(piece)
                     return True
 
         return False
