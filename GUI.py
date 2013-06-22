@@ -87,9 +87,9 @@ def draw_board():
                 pygame.draw.rect(DISPLAYSURF, DARK_BOX_COLOR, box)
 
 
-def winning_animation(display):
+def winning_animation(display, game_status):
     font = pygame.font.Font('freesansbold.ttf', 36)
-    text = font.render("Game Over!", True, (255, 255, 255))
+    text = font.render(game_status, True, (255, 255, 255))
     text_rect = text.get_rect()
     text_rect.center = (320, 240)
     if display:
@@ -124,7 +124,7 @@ def main():
 
     while True:
         mouse_clicked = False
-        chess_board = game.board
+        chess_board = game.get_board()
         DISPLAYSURF.fill(BACKGROUND)
         draw_board()
 
@@ -148,8 +148,9 @@ def main():
 
         draw_pieces(chess_board)
 
-        if game.white_win() or game.black_win():
-            winning_animation(display)
+        if game.white_win() or game.black_win() or game.stalemate():
+            status = game.get_game_status()
+            winning_animation(display, status)
             display = not display
             animation = True
 
