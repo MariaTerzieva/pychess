@@ -15,6 +15,7 @@ Y_MARGIN = int((WINDOW_HEIGHT - (BOARD_HEIGHT * BOX_SIZE)) / 2)
 LIGHT_BOX_COLOR = (255, 170, 85)
 DARK_BOX_COLOR = (102, 51, 0)
 BACKGROUND = (50, 0, 0)
+RED = (255, 0, 0)
 WHITE = 'white'
 BLACK = 'black'
 EMPTY = None
@@ -145,6 +146,11 @@ def main():
                 else:
                     game.move_piece(first_selection, box)
                     first_selection = None
+
+        if first_selection:
+            left, top = left_top_coords_of_box(first_selection)
+            selected_box = pygame.Rect(left, top, BOX_SIZE, BOX_SIZE)
+            pygame.draw.rect(DISPLAYSURF, RED, selected_box, 5)
 
         draw_pieces(chess_board)
 
