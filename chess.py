@@ -368,6 +368,7 @@ class ChessBoard:
         """Check for any valid moves for whoever turn it is."""
         color = self.turn
         move = False
+        moved = None
 
         for y in range(8):
             for x in range(8):
@@ -404,17 +405,19 @@ class ChessBoard:
                                         break
                     elif isinstance(piece, Pawn):
                         if color == self.WHITE:
-                            positions = ((x, y - 1), (x, y - 2),
+                            positions = ((x, y - 1),
                                          (x + 1, y - 1), (x - 1, y - 1))
                         else:
-                            positions = ((x, y + 1), (x, y + 2),
+                            positions = ((x, y + 1),
                                          (x + 1, y + 1), (x - 1, y + 1))
                         for px, py in positions:
                             if px <= 7 and px >= 0 and py <= 7 and py >= 0:
-                                if self.valid_pawn_move((x, y), (px, py)):
-                                    move = True
-                                    break
+                                if not self.same_color((x, y), (px, py)):
+                                    if self.valid_pawn_move((x, y), (px, py)):
+                                        move = True
+                                        break
                 if move:
+                    print(piece)
                     return True
 
         return False
