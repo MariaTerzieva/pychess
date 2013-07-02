@@ -12,8 +12,6 @@ Playing the game:
 
 TODO:  
 
-    * Pawn promotion  
-
     * Draw  
 
     * A.I. maybe  
