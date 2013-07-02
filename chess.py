@@ -68,6 +68,8 @@ class ChessBoard:
         self.white_king = (4, 7)
         self.black_king = (4, 0)
         self.game_status = self.GAME_IN_PROGRESS
+        self.pawn_promotion = None
+        self.promotion = None
 
     def on_board(self, old_pos, new_pos):
         x_new, y_new = new_pos
@@ -509,6 +511,9 @@ class ChessBoard:
         if not self.valid_pawn_move(old_pos, new_pos):
             return False
 
+        if new_y == 0 or new_y == 7:
+            self.promotion = new_pos
+
         if abs(new_y - old_y) == 2:
             if new_x > 0:
                 left = new_x - 1, new_y
@@ -593,3 +598,17 @@ class ChessBoard:
 
     def get_board(self):
         return self.board
+
+    def set_pawn_promotion(self, piece):
+        x, y = self.promotion
+        self.board[y][x] = piece
+        self.promotion = None
+
+    def promotion_allowed(self):
+        return self.promotion is not None
+
+    def promotion_color(self):
+        if self.turn == self.WHITE:
+            return self.BLACK
+        else:
+            return self.WHITE

@@ -15,7 +15,10 @@ Y_MARGIN = int((WINDOW_HEIGHT - (BOARD_HEIGHT * BOX_SIZE)) / 2)
 LIGHT_BOX_COLOR = (255, 170, 85)
 DARK_BOX_COLOR = (102, 51, 0)
 BACKGROUND = (50, 0, 0)
+TEXT_COLOR = (255, 255, 255)
 RED = (255, 0, 0)
+GREEN = (0, 155, 0)
+TEXT_BACKGROUND = GREEN
 WHITE = 'white'
 BLACK = 'black'
 EMPTY = None
@@ -32,7 +35,7 @@ def get_box_at_pixel(pixel):
         for x in range(BOARD_WIDTH):
             left, top = left_top_coords_of_box((x, y))
             box_rect = pygame.Rect(left, top, BOX_SIZE, BOX_SIZE)
-            if box_rect.collidepoint(pixel[0], pixel[1]):
+            if box_rect.collidepoint(pixel):
                 return (x, y)
     return (None, None)
 
@@ -89,19 +92,64 @@ def draw_board():
 
 
 def winning_animation(display, game_status):
-    font = pygame.font.Font('freesansbold.ttf', 36)
-    text = font.render(game_status, True, (255, 255, 255))
+    text = BIGFONT.render(game_status, True, TEXT_COLOR)
     text_rect = text.get_rect()
-    text_rect.center = (320, 240)
+    text_rect.center = (int(WINDOW_WIDTH / 2), int(WINDOW_HEIGHT / 2))
     if display:
         DISPLAYSURF.blit(text, text_rect)
 
 
+def ask_promotion(color):
+    center = (int(WINDOW_WIDTH / 2), int(WINDOW_HEIGHT / 2))
+    text = 'Please choose pawn promotion value:'
+    question = FONT.render(text, True, TEXT_COLOR, TEXT_BACKGROUND)
+    question_rect = question.get_rect()
+    question_rect.center = center
+    knight = FONT.render('Knight', True, TEXT_COLOR, TEXT_BACKGROUND)
+    knight_rect = knight.get_rect()
+    knight_rect.center = (center[0] - 120, center[1] + 30)
+    queen = FONT.render('Queen', True, TEXT_COLOR, TEXT_BACKGROUND)
+    queen_rect = queen.get_rect()
+    queen_rect.center = (center[0] - 60, center[1] + 30)
+    rook = FONT.render('Rook', True, TEXT_COLOR, TEXT_BACKGROUND)
+    rook_rect = rook.get_rect()
+    rook_rect.center = (center[0] + 60, center[1] + 30)
+    bishop = FONT.render('Bishop', True, TEXT_COLOR, TEXT_BACKGROUND)
+    bishop_rect = bishop.get_rect()
+    bishop_rect.center = (center[0] + 120, center[1] + 30)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONUP:
+                mouse_pos = event.pos
+                if knight_rect.collidepoint(mouse_pos):
+                    return chess.Knight(color)
+                elif queen_rect.collidepoint(mouse_pos):
+                    return chess.Queen(color)
+                elif rook_rect.collidepoint(mouse_pos):
+                    return chess.Rook(color)
+                elif bishop_rect.collidepoint(mouse_pos):
+                    return chess.Bishop(color)
+
+        DISPLAYSURF.blit(question, question_rect)
+        DISPLAYSURF.blit(queen, queen_rect)
+        DISPLAYSURF.blit(knight, knight_rect)
+        DISPLAYSURF.blit(rook, rook_rect)
+        DISPLAYSURF.blit(bishop, bishop_rect)
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
+
 def main():
-    global DISPLAYSURF, IMAGES
+    global DISPLAYSURF, IMAGES, FONT, BIGFONT, FPSCLOCK
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    FONT = pygame.font.Font('freesansbold.ttf', 16)
+    BIGFONT = pygame.font.Font('freesansbold.ttf', 32)
 
     pygame.display.set_caption('Chess Game - Maria Tezieva')
 
@@ -151,6 +199,11 @@ def main():
             left, top = left_top_coords_of_box(first_selection)
             selected_box = pygame.Rect(left, top, BOX_SIZE, BOX_SIZE)
             pygame.draw.rect(DISPLAYSURF, RED, selected_box, 5)
+
+        if game.promotion_allowed():
+            color = game.promotion_color()
+            piece = ask_promotion(color)
+            game.set_pawn_promotion(piece)
 
         draw_pieces(chess_board)
 
