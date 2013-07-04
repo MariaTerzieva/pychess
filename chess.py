@@ -604,6 +604,15 @@ class ChessBoard:
         self.board[y][x] = piece
         self.promotion = None
 
+        if not self.any_valid_moves():
+            if self.check():
+                if self.turn == self.WHITE:
+                    self.game_status = self.BLACK_WIN
+                else:
+                    self.game_status = self.WHITE_WIN
+            else:
+                self.game_status = self.STALEMATE
+
     def promotion_allowed(self):
         return self.promotion is not None
 
