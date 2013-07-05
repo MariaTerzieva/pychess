@@ -250,8 +250,9 @@ class ChessBoardTests(unittest.TestCase):
         self.assertTrue(result)
         result = self.board.any_valid_moves()
         self.assertFalse(result)
-        status = 'White win!'
-        self.assertEqual(status, self.board.get_game_status())
+        self.assertTrue(self.board.white_win())
+        self.assertFalse(self.board.black_win())
+        self.assertFalse(self.board.stalemate())
 
     def test_get_game_status(self):
         status = 'Game in progress.'
