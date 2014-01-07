@@ -1,5 +1,5 @@
-python-project
-==============
+pychess
+=======
 
 Simple Chess Game
 
