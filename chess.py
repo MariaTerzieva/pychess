@@ -488,11 +488,11 @@ class ChessBoard:
             return False
 
         if new_x == old_x + 2:
-            self.board[7][7].moved = True
-            self.move((7, 7), (5, 7))
+            self.board[new_y][7].moved = True
+            self.move((7, new_y), (5, new_y))
         elif new_x == old_x - 2:
-            self.board[7][0].moved = True
-            self.move((0, 7), (3, 7))
+            self.board[new_y][0].moved = True
+            self.move((0, new_y), (3, new_y))
 
         if self.turn == self.WHITE:
             self.white_king = new_pos
