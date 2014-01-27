@@ -121,10 +121,10 @@ class ChessBoard:
             color = self.player_color(old_pos)
 
             if x_new == x_old + 2 and y_new == y_old:
-                rook = 7, 7
+                rook = 7, y_new
                 return self.castle_check(old_pos, rook, color)
             elif x_new == x_old - 2 and y_new == y_old:
-                rook = 0, 7
+                rook = 0, y_new
                 return self.castle_check(old_pos, rook, color)
             else:
                 return False
